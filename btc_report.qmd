@@ -4,6 +4,7 @@ author: "Lucas Andrade"
 format:
   html:
     theme: solar
+    embed-resources: true
 editor: visual
 ---
 
