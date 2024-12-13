@@ -3,28 +3,290 @@ title: "BTC Weekly Report"
 author: "Lucas Andrade"
 format:
   html:
-    theme: solar
-    embed-resources: true
+    theme: superhero
+    self-contained: false
 editor: visual
 ---
 
-## Quarto
-
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
-
-```{r}
-1 + 1
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      warning = FALSE,
+                      message = FALSE)
 ```
 
-You can add options to executable code like this
-
 ```{r}
-#| echo: false
-2 * 2
+#|label: libraries
+
+library(tidyverse)
+library(plotly)
+library(lubridate)
+library(janitor)
+library(gtrendsR)
+library(reticulate)
+library(httr)
+library(jsonlite)
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+```{r}
+#| label: setting_dates
+
+current_year <- lubridate::year(Sys.Date())
+data_fim <- as.POSIXct(Sys.Date(), tz = "America/Sao_Paulo")
+data_inicio <- data_fim - lubridate::days(6)
+
+```
+
+```{r}
+#| label: weekly_btc_data
+
+# Defining the API endpoint to get BTC price
+
+# real_time_url <- "https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT"
+historical_url <- "https://api.binance.com/api/v3/klines"
+
+# Calcular o timestamp de início e fim corretamente usando Sys.time()
+timestamp_fim <- as.integer(data_fim) * 1000  # 1 dia atrás (em milissegundos)
+timestamp_inicio <- as.integer(data_inicio)*1000 # 7 dias atrás (em milissegundos)
+
+# Requisição para a API
+weekly_response <- httr::GET(historical_url,
+                      query = list(
+                        symbol = "BTCUSDT",
+                        interval = "1h",
+                        startTime = timestamp_inicio,
+                        endTime = timestamp_fim
+                      ))
+
+hist_data <-
+  jsonlite::fromJSON( 
+    httr::content(weekly_response, 
+                  'text',
+                  encoding = "UTF-8")
+  )
+
+weekly_dataset <-
+  data.frame(
+    timestamp = as.POSIXct(as.numeric(hist_data[,1]) / 1000, origin = "1970-01-01", tz = "America/Sao_Paulo"),
+    open = as.numeric(hist_data[, 2]),
+    high = as.numeric(hist_data[, 3]),
+    low = as.numeric(hist_data[, 4]),
+    close = as.numeric(hist_data[, 5]),
+    volume = as.numeric(hist_data[, 6])
+  )
+
+weekly_dataset <- weekly_dataset |> 
+  dplyr::mutate(date= as.Date(timestamp))
+
+```
+
+```{r}
+#| label: weekly_data
+
+#### Weekly data ####
+
+# weekly_dataset <- btc_dataset |> 
+
+weekly_highest <- weekly_dataset |> 
+  dplyr::slice_max(high) |> 
+  dplyr::pull(high) |> 
+  round(3)
+
+weekly_lowest <- weekly_dataset |> 
+  dplyr::slice_min(low) |> 
+  dplyr::pull(low) |> 
+  round(3)
+
+# dataset grouped per day
+
+weekly_agg <- weekly_dataset |> 
+  dplyr::group_by(date) |> 
+  dplyr::summarise(open = mean(open, na.rm= TRUE),
+                   close = mean(close, na.rm = TRUE),
+                   high = max(high, na.rm = TRUE),
+                   low = min(low, na.rm = TRUE),
+                   volume = sum(volume, na.rm = TRUE))
+
+weekly_open <- weekly_agg |> 
+  dplyr::slice_min(date) |> 
+  dplyr::pull(open) |> 
+  as.integer()
+
+weekly_close <- weekly_agg |> 
+  dplyr::slice_max(date) |> 
+  dplyr::pull(close) |> 
+  as.integer()
+
+weekly_close_text <- paste0('$',(weekly_close/1000))
+weekly_open_text <- paste0('$',(weekly_open/1000))
+
+
+weekly_delta <- round(weekly_close - weekly_open,3)
+weekly_delta_percent <- paste0(round((weekly_delta/weekly_open)*100,2),'%')
+
+```
+
+## **Preço**
+
+BTC abriu a **`r weekly_open_text`** e fechou a **`r weekly_close_text`** durante a semana, registrando uma variação de **`r weekly_delta_percent`**. Esse movimento reflete as flutuações observadas nos mercados globais
+
+```{r, fig.align='center', fig.width= 7}
+#| label: weekly_chart
+
+p <- weekly_dataset |>
+  ggplot() +
+  geom_line(aes(x = timestamp, y = close, group = 1), fill = '#0f2537') +
+  scale_x_datetime(date_labels = "%d %b", date_breaks = "1 day") +
+  labs(title = "Preço Semanal do BTC", x = "Data", y = "Preço de Fechamento (USD)") +
+  theme_classic(base_size = 14) +
+  theme(
+    plot.title = element_text(
+      color = "#df6919",
+      face = "bold",
+      size = 16
+    ),
+    axis.title.x = element_text(color = "#0f2537", size = 12),
+    axis.title.y = element_text(color = "#0f2537", size = 12)
+  )
+
+p
+#plotly::ggplotly(p)
+
+```
+
+<br>
+
+## **Volume**
+
+```{r}
+#| label: volume_data
+
+# volume_dataset <- btc_dataset |> 
+#   dplyr::filter(year == current_year) |> 
+#   dplyr::slice_max(week) 
+
+
+volume_open <- weekly_agg|> 
+  dplyr::slice_min(date) |> 
+  dplyr::pull(volume) |> 
+  round(3)
+
+volume_closed <- weekly_agg |> 
+  dplyr::slice_max(date) |> 
+  dplyr::pull(volume) |> 
+  round(3)
+
+volume_avg <- round(mean(weekly_agg$volume, na.rm = TRUE),2)
+
+volume_total <- round(sum(weekly_agg$volume, na.rm = TRUE),2)
+
+volume_start <- weekly_agg |>
+  dplyr::slice_min(date) |>
+  dplyr::pull(volume) |>
+  as.integer()
+
+volume_end <- weekly_agg |>
+  dplyr::slice_max(date) |>
+  dplyr::pull(volume) |>
+  as.integer()
+
+volume_total_text <- paste0('$',as.integer(volume_total/1000), 'Mi')
+
+volume_delta <- volume_end - volume_start
+volume_delta_percent <- paste0(round(((volume_end/volume_start))*100,2),'%')
+```
+
+O volume total de negociação na semana foi de **`r volume_total_text`**. Em relaçao ao volume negociado, houve uma variação de **`r volume_delta_percent`**, em relação ao primeiro dia da série.
+
+```{r, fig.align='center'}
+#| label: volume_chart
+
+p <- ggplot(weekly_dataset) +
+  geom_col(aes(x = timestamp, y = volume), fill = '#0f2537') +
+  theme_classic(base_size = 14) +
+  labs(title = "Volume neogciado do BTC", x = "Data", y = "Volume") +
+  scale_x_datetime(date_labels = "%d %b", date_breaks = "1 day") +
+  theme(
+    plot.title = element_text(
+      color = "#df6919",
+      face = "bold",
+      size = 16
+    ),
+    axis.title.x = element_text(color = "#0f2537", size = 12),
+    axis.title.y = element_text(color = "#0f2537", size = 12)
+  )
+
+p
+#plotly::ggplotly(p)
+```
+
+## Marketcap
+
+```{r}
+#|label: marketcap_data
+
+# Connect to CoinGecko API to get marketcap data
+
+marketcap_url <- "https://api.coingecko.com/api/v3/coins/bitcoin/market_chart"
+
+
+mktcap_response <- GET(marketcap_url, 
+                       query = list(
+                         vs_currency = "usd", 
+                         days = "7"
+                         ))
+
+market_data <- jsonlite::fromJSON(content(mktcap_response, "text", encoding = "UTF-8"))
+
+market_df <- data.frame(
+  timestamp = as.POSIXct(market_data$market_caps[, 1] / 1000, origin = "1970-01-01", tz = "America/Sao_Paulo"),
+  market_cap = market_data$market_caps[, 2]
+)
+
+market_df <- market_df |> 
+  dplyr::mutate(date = as.Date(timestamp))
+
+```
+
+```{r}
+#|label: marketcap_agg
+
+marketcap_start <- market_df |> 
+  dplyr::slice_min(timestamp) |> 
+  dplyr::pull(market_cap)
+
+marketcap_start_text = paste('$',round((marketcap_start/1000000000000),2),'Tri')
+
+marketcap_end <- market_df |> 
+  dplyr::slice_max(timestamp) |> 
+  dplyr::pull(market_cap)
+
+marketcap_end_text = paste('$',round((marketcap_end/1000000000000),2),'Tri')
+
+marketcap_delta_percent = round((1-(marketcap_end/marketcap_start))*100,2)
+```
+
+O marketcap de BTC inicou a semana em **`r marketcap_start_text`** e fecha a **`r marketcap_end_text`**, apresentando uma variação de **`r marketcap_delta_percent`%**.
+
+```{r, fig.align='center'}
+#| label: marketcap_chart
+
+p <- market_df |> 
+  ggplot(aes(x = timestamp, y = market_cap))+
+  geom_area(fill = '#df6919')+
+  scale_x_datetime(date_labels = "%d %b", date_breaks = "1 day")+
+  scale_y_continuous(labels = scales::label_number(scale = 1e-12, suffix = "T"))+
+  labs(
+    title = "Market Cap do BTC nos últimos 7 dias",
+    x = "Data",
+    y = "Market Cap (USD)"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(color = "#0f2537", face = "bold", size = 16),
+    axis.title.x = element_text(color = "#0f2537", size = 12),
+    axis.title.y = element_text(color = "#0f2537", size = 12)
+  )
+
+p
+#plotly::ggplotly(p)
+```

@@ -8,7 +8,7 @@
 
 <meta name="author" content="Lucas Andrade">
 
-<title>BTC Weekly Report</title>
+<title>Project Summary</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,16 +24,16 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="btc_report_files/libs/clipboard/clipboard.min.js"></script>
-<script src="btc_report_files/libs/quarto-html/quarto.js"></script>
-<script src="btc_report_files/libs/quarto-html/popper.min.js"></script>
-<script src="btc_report_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="btc_report_files/libs/quarto-html/anchor.min.js"></script>
-<link href="btc_report_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="btc_report_files/libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="btc_report_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="btc_report_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="btc_report_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<script src="project_summary_files/libs/clipboard/clipboard.min.js"></script>
+<script src="project_summary_files/libs/quarto-html/quarto.js"></script>
+<script src="project_summary_files/libs/quarto-html/popper.min.js"></script>
+<script src="project_summary_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="project_summary_files/libs/quarto-html/anchor.min.js"></script>
+<link href="project_summary_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="project_summary_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="project_summary_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="project_summary_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="project_summary_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -46,7 +46,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">BTC Weekly Report</h1>
+<h1 class="title">Project Summary</h1>
 </div>
 
 
@@ -69,45 +69,91 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="preço" class="level2">
-<h2 class="anchored" data-anchor-id="preço"><strong>Preço</strong></h2>
-<p>BTC abriu a <strong>$98.847</strong> e fechou a <strong>$100.772</strong> durante a semana, registrando uma variação de <strong>1.95%</strong>. Esse movimento reflete as flutuações observadas nos mercados globais</p>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="btc_report_files/figure-html/weekly_chart-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p><br></p>
+<section id="newsletter-semanal-de-bitcoin" class="level1">
+<h1>Newsletter Semanal de Bitcoin</h1>
+<p>Este projeto é uma newsletter semanal totalmente automatizada que fornece análises detalhadas e principais métricas sobre o Bitcoin (BTC). A análise inclui tendências de preços, volume de negociações e capitalização de mercado. O relatório pode ser encontrado no link: <a href="https://lucaz-mac.quarto.pub/btc-weekly-report/" class="uri">https://lucaz-mac.quarto.pub/btc-weekly-report/</a></p>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>O objetivo é entregar insights valiosos sobre o mercado de Bitcoin por meio de um processo automatizado e eficiente. As etapas incluem:</p>
+<ul>
+<li><p><strong>Coleta de Dados:</strong> Extração automática de dados em tempo real das APIs da Binance e CoinGecko.</p></li>
+<li><p><strong>Processamento de Dados:</strong> Geração de gráficos e realização de análises detalhadas.</p></li>
+<li><p><strong>Criação de Relatório:</strong> Compilação das informações em um relatório completo.</p></li>
+<li><p><strong>Distribuição por Email:</strong> Envio automático do relatório para os assinantes interessados.</p></li>
+</ul>
 </section>
-<section id="volume" class="level2">
-<h2 class="anchored" data-anchor-id="volume"><strong>Volume</strong></h2>
-<p>O volume total de negociação na semana foi de <strong>$218Mi</strong>. Em relaçao ao volume negociado, houve uma variação de <strong>2.15%</strong>, em relação ao primeiro dia da série.</p>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="btc_report_files/figure-html/volume_chart-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
+<section id="os-dados" class="level2">
+<h2 class="anchored" data-anchor-id="os-dados">Os Dados</h2>
+<p>O relatório utiliza dados de múltiplas fontes para análise do Bitcoin:</p>
+<ul>
+<li>Dados em tempo real: API da Binance (endpoint de <a href="https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/rest-api/Kline-Candlestick-Data">klines</a>)</li>
+<li>Dados de Market Cap: API do CoinGecko (endpoint de <a href="https://docs.coingecko.com/reference/global-market-cap-chart">market chart</a>)</li>
+</ul>
+<p>Os dados contemplam:</p>
+<ul>
+<li><p>Séries temporais de preço</p></li>
+<li><p>Volume de negociação</p></li>
+<li><p>Capitalização de mercado</p></li>
+<li><p>Período de análise: 7 dias correntes</p></li>
+</ul>
 </section>
-<section id="marketcap" class="level2">
-<h2 class="anchored" data-anchor-id="marketcap">Marketcap</h2>
-<p>O marketcap de BTC inicou a semana em <strong>$ 1.93 Tri</strong> e fecha a <strong>$ 1.98 Tri</strong>, apresentando uma variação de <strong>-2.48%</strong>.</p>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="btc_report_files/figure-html/marketcap_chart-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
+<section id="o-relatório" class="level2">
+<h2 class="anchored" data-anchor-id="o-relatório">O Relatório</h2>
+<p>O objetivo desta análise semanal é:</p>
+<ul>
+<li><p>Compreender o comportamento do Bitcoin no período recente</p></li>
+<li><p>Avaliar variações de preço, volume e capitalização de mercado</p></li>
+<li><p>Identificar tendências e movimentações significativas no mercado de bitcoins</p></li>
+</ul>
+<section id="resultados-e-interpretações" class="level3">
+<h3 class="anchored" data-anchor-id="resultados-e-interpretações">Resultados e Interpretações</h3>
+<section id="análise-de-preço" class="level4">
+<h4 class="anchored" data-anchor-id="análise-de-preço">1. Análise de Preço</h4>
+<p>Em relação ao preço do ativo o relatório permite a análise das seguintes métricas</p>
+<ul>
+<li><p>Preço de abertura</p></li>
+<li><p>Preço de fechamento</p></li>
+<li><p>Variação percentual dos últimos 7 dias</p></li>
+</ul>
+<p>A visualização do gráfico de preços demonstra a volatilidade característica do Bitcoin, com as devidas flutuações durante a semana.</p>
+</section>
+<section id="análise-de-volume" class="level4">
+<h4 class="anchored" data-anchor-id="análise-de-volume">2. Análise de Volume</h4>
+<p>Quanto ao volume de nogociações da criptomoeda o relatório fornece dados das seguintes métricas:</p>
+<ul>
+<li><p>Volume total negociado</p></li>
+<li><p>Variação de volume</p></li>
+</ul>
+<p>O gráfico de volume revela a intensidade das negociações, permitindo identificar dias de maior e menor atividade no mercado.</p>
+</section>
+<section id="análise-de-market-cap" class="level4">
+<h4 class="anchored" data-anchor-id="análise-de-market-cap">3. Análise de Market Cap</h4>
+<p>Através do relatório é possível identificar a dinâmica da capitalização de mercado usando as seguintes informações:</p>
+<ul>
+<li><p>Market Cap inicial</p></li>
+<li><p>Market Cap final</p></li>
+<li><p>Variação percentual</p></li>
+</ul>
+<p>O gráfico de área ilustra a evolução do market cap, evidenciando as oscilações no valor total do mercado de Bitcoin.</p>
+</section>
+</section>
+<section id="conclusão" class="level3">
+<h3 class="anchored" data-anchor-id="conclusão">Conclusão</h3>
+<p>A análise da última semana revela a natureza dinâmica e volátil do Bitcoin:</p>
+<ul>
+<li>Variações significativas de preço</li>
+<li>Flutuações no volume de negociação</li>
+<li>Alterações na capitalização de mercado</li>
+</ul>
+<p>Essas variações refletem a sensibilidade do Bitcoin a fatores externos, como: - Condições macroeconômicas - Sentimento do mercado - Eventos regulatórios e geopolíticos</p>
+<p>Sobre a utilidade da relatório recomenda-se monitoramento contínuo e análise de tendências de longo prazo para compreensão mais abrangente do comportamento do ativo.</p>
+<p>Sobre o produto em si, a inclusão de métricas que avaliem o sentimento do mercado através de análise de redes sociais ou ainda o monitoramento da pesquisa do ativo em ferramentas como Goolge, podem incrementar o seu potencial.</p>
+</section>
+</section>
+<section id="distribuição-automática" class="level2">
+<h2 class="anchored" data-anchor-id="distribuição-automática">Distribuição Automática</h2>
+<p>O relatório final é enviado por email para todos os emails cadastrados. O envio é realizado sem necessidade de intervenção manual, garantindo a automatização total do produto com entregas pontuais e consistentes.</p>
+</section>
 </section>
 
 </main>

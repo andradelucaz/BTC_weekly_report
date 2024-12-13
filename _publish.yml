@@ -1,0 +1,8 @@
+- source: btc_report.qmd
+  quarto-pub:
+    - id: fe61e5eb-ca7c-4a31-9e15-22ec37d802e9
+      url: 'https://lucaz-mac.quarto.pub/btc-weekly-report'
+- source: project_summary.qmd
+  quarto-pub:
+    - id: 69a34263-056b-43f5-a89e-fac675e60a4a
+      url: 'https://lucaz-mac.quarto.pub/project-summary'

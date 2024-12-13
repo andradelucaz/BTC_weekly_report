@@ -1,0 +1,106 @@
+---
+title: "Project Summary"
+author: "Lucas Andrade"
+format: html
+editor: visual
+---
+
+# Newsletter Semanal de Bitcoin
+
+Este projeto é uma newsletter semanal totalmente automatizada que fornece análises detalhadas e principais métricas sobre o Bitcoin (BTC). A análise inclui tendências de preços, volume de negociações e capitalização de mercado. O relatório pode ser encontrado no link: <https://lucaz-mac.quarto.pub/btc-weekly-report/>
+
+## Overview
+
+O objetivo é entregar insights valiosos sobre o mercado de Bitcoin por meio de um processo automatizado e eficiente. As etapas incluem:
+
+-   **Coleta de Dados:** Extração automática de dados em tempo real das APIs da Binance e CoinGecko.
+
+-   **Processamento de Dados:** Geração de gráficos e realização de análises detalhadas.
+
+-   **Criação de Relatório:** Compilação das informações em um relatório completo.
+
+-   **Distribuição por Email:** Envio automático do relatório para os assinantes interessados.
+
+## Os Dados
+
+O relatório utiliza dados de múltiplas fontes para análise do Bitcoin:
+
+-   Dados em tempo real: API da Binance (endpoint de [klines](https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/rest-api/Kline-Candlestick-Data))
+-   Dados de Market Cap: API do CoinGecko (endpoint de [market chart](https://docs.coingecko.com/reference/global-market-cap-chart))
+
+Os dados contemplam:
+
+-   Séries temporais de preço
+
+-   Volume de negociação
+
+-   Capitalização de mercado
+
+-   Período de análise: 7 dias correntes
+
+## O Relatório
+
+O objetivo desta análise semanal é:
+
+-   Compreender o comportamento do Bitcoin no período recente
+
+-   Avaliar variações de preço, volume e capitalização de mercado
+
+-   Identificar tendências e movimentações significativas no mercado de bitcoins
+
+### Resultados e Interpretações
+
+#### 1. Análise de Preço
+
+Em relação ao preço do ativo o relatório permite a análise das seguintes métricas
+
+-   Preço de abertura
+
+-   Preço de fechamento
+
+-   Variação percentual dos últimos 7 dias
+
+A visualização do gráfico de preços demonstra a volatilidade característica do Bitcoin, com as devidas flutuações durante a semana.
+
+#### 2. Análise de Volume
+
+Quanto ao volume de nogociações da criptomoeda o relatório fornece dados das seguintes métricas:
+
+-   Volume total negociado
+
+-   Variação de volume
+
+O gráfico de volume revela a intensidade das negociações, permitindo identificar dias de maior e menor atividade no mercado.
+
+#### 3. Análise de Market Cap
+
+Através do relatório é possível identificar a dinâmica da capitalização de mercado usando as seguintes informações:
+
+-   Market Cap inicial
+
+-   Market Cap final
+
+-   Variação percentual
+
+O gráfico de área ilustra a evolução do market cap, evidenciando as oscilações no valor total do mercado de Bitcoin.
+
+### Conclusão
+
+A análise da última semana revela a natureza dinâmica e volátil do Bitcoin:
+
+-   Variações significativas de preço 
+-   Flutuações no volume de negociação 
+-   Alterações na capitalização de mercado
+
+Essas variações refletem a sensibilidade do Bitcoin a fatores externos, como: 
+-   Condições macroeconômicas 
+-   Sentimento do mercado 
+-   Eventos regulatórios e geopolíticos
+
+Sobre a utilidade da relatório recomenda-se monitoramento contínuo e análise de tendências de longo prazo para compreensão mais abrangente do comportamento do ativo.
+
+Sobre o produto em si, a inclusão de métricas que avaliem o sentimento do mercado através de análise de redes sociais ou ainda o monitoramento da pesquisa do ativo em ferramentas como Goolge, podem incrementar o seu potencial.
+
+## Distribuição Automática
+
+O relatório final é enviado por email para todos os emails cadastrados. O envio é realizado sem necessidade de intervenção manual, garantindo a automatização total do produto com entregas pontuais e consistentes.
